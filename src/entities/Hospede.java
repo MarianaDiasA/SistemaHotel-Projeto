@@ -49,29 +49,33 @@ public class Hospede extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        
+        System.out.println("Voltou");
+        this.start();
+        
+        try {
+			this.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+        
+        System.out.println("Entrou");
     }
 
     @Override
     public void run() {
         while (true) {
-            if (quarto != null) {
-            	// mostra o hóspede dentro do quarto
-            	System.out.println("Hóspede " + this.getNome() + " se encontra quarto: " + quarto);
-                
-            	//método para o passeio
-            	saidaPasseio();
-
-            	// TODO Que retorno???
-                System.out.println("Hóspede " + this.getNome() + " voltou do passeio");
-                
-                // espera 5 segundos para poder sair de novo
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+        	if (terminouLimpar()) {
+        		this.getQuarto().setPosseChave(EnumPosseChave.HOSPEDE);
+        		this.getQuarto().setLimpo(false);
+        		break;
+        	}
         }
+    }
+    
+    // Métodos auxiliares
+    private boolean terminouLimpar() {
+    	return (quarto.getPosseChave().equals(EnumPosseChave.HOTEL));
     }
 }
 

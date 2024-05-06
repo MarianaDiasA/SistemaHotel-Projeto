@@ -1,10 +1,26 @@
 package entities;
 
 public class Camareira extends Thread {
+    private EnumCamareiraDisp disponibilidade;
     
+    public Camareira() {
+    	this.disponibilidade = EnumCamareiraDisp.DISPONIVEL;
+    }
+    
+    // Getters e Setters
+	public EnumCamareiraDisp getDisponibilidade() {
+		return disponibilidade;
+	}
+
+	public void setDisponibilidade(EnumCamareiraDisp disponibilidade) {
+		this.disponibilidade = disponibilidade;
+	}
+	
     // Métodos
-    private void limparQuarto(Quarto quarto) { 
+    void limparQuarto(Quarto quarto) { 
     	if (quarto.getPosseChave().equals(EnumPosseChave.HOTEL)) {
+    		this.setDisponibilidade(EnumCamareiraDisp.OCUPADA);
+    		
     		quarto.setPosseChave(EnumPosseChave.CAMAREIRA);
             System.out.println("A Camareira está limpando o quarto");
             
@@ -13,8 +29,10 @@ public class Camareira extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            
+            System.out.println("A Camareira terminou de limpar o quarto");
             quarto.setPosseChave(EnumPosseChave.HOTEL);
+            quarto.setLimpo(true);
+            this.setDisponibilidade(EnumCamareiraDisp.DISPONIVEL);
     	}
     }
     

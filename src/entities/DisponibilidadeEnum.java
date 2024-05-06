@@ -5,5 +5,4 @@ package entities;
 
 public enum DisponibilidadeEnum {
 	VAGO, OCUPADO;
-
 }

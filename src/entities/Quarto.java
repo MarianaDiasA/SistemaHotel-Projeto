@@ -6,13 +6,17 @@ public class Quarto {
 	private DisponibilidadeEnum disponibilidadeQuarto;
 	private EnumPosseChave posseChave;
 	private ArrayList<Hospede> hospedes;
+	private boolean isLimpo;
 	
+	// Constructors
 	public Quarto(){
 		this.setDisponibilidade(DisponibilidadeEnum.VAGO);
 		this.setHospedes(new ArrayList<Hospede>());
 		this.posseChave = EnumPosseChave.HOTEL;
+		this.isLimpo = false;
 	}
-
+	
+	// Getters e Setters
 	public DisponibilidadeEnum getDisponibilidade() {
 		return disponibilidadeQuarto;
 	}
@@ -38,7 +42,17 @@ public class Quarto {
 	}
 
 	protected void setPosseChave(EnumPosseChave posseChave) {
+		System.out.println("\nPosse da chave mudou de: " + this.getPosseChave().name() +
+				"\nPARA: " + posseChave.name());
 		this.posseChave = posseChave;
+	}
+	
+	public boolean isLimpo() {
+		return isLimpo;
+	}
+
+	public void setLimpo(boolean isLimpo) {
+		this.isLimpo = isLimpo;
 	}
 
 	public int getQuantidade() {

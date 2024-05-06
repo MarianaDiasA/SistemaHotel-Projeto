@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Recepcionista {
 
 	private ArrayList<Quarto> quartos;
+	private Observer observador;
 	
 	// Constructors
 	public Recepcionista() {
@@ -13,6 +14,12 @@ public class Recepcionista {
 	
 	public Recepcionista(ArrayList<Quarto> quartos) {
 		this.quartos = quartos;
+	}
+	
+	public Recepcionista(ArrayList<Quarto> quartos, ArrayList<Camareira> camareiras) {
+		this.quartos = quartos;
+		this.observador = new Observer(quartos, camareiras);
+		this.observador.start();
 	}
 	
 	// Getters e Setters
@@ -30,12 +37,13 @@ public class Recepcionista {
 		 * Este método aloca um hóspede em um dos quartos disponíveis (VAGO) presentes
 		 * na lista de quartos do recepcionista.
 		 */
+		System.out.println("Alocou");
 		for (Quarto quarto : this.getQuartos()) {
 			if (quarto.getDisponibilidade().equals(DisponibilidadeEnum.VAGO)) {
 				hospede.setQuarto(quarto);
+				quarto.setPosseChave(EnumPosseChave.HOSPEDE);
 				quarto.setDisponibilidade(DisponibilidadeEnum.OCUPADO);
 				quarto.setHospedes(hospede);
-				quarto.setPosseChave(EnumPosseChave.HOSPEDE);
 			}
 		}
 	}
@@ -46,6 +54,7 @@ public class Recepcionista {
 		 * hóspedes
 		 */
 		
+		System.out.println("Alocou");
 		for (Quarto quarto : this.getQuartos()) {
 			for (Hospede hospede : hospedes) {
 				if (quarto.getQuantidade() < 4) {

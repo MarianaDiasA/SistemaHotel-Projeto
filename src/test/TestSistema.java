@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import entities.Camareira;
 import entities.DisponibilidadeEnum;
 import entities.EnumPosseChave;
 import entities.Hospede;
@@ -18,8 +19,7 @@ class TestSistema {
 	void recepcionistaAlocaUmQuartoVago() {
 		ArrayList<Quarto> quartos = new ArrayList<Quarto>();
 		quartos.add(new Quarto());
-		Recepcionista recep = new Recepcionista();
-		recep.setQuartos(quartos);
+		Recepcionista recep = new Recepcionista(quartos);
 		Hospede hosp = new Hospede();
 		recep.aloca(hosp);
 	
@@ -30,8 +30,7 @@ class TestSistema {
 	void verificandoSeHospedeEstaNoQuarto() {
 		ArrayList<Quarto> quartos = new ArrayList<Quarto>();
 		quartos.add(new Quarto());
-		Recepcionista recep = new Recepcionista();
-		recep.setQuartos(quartos);
+		Recepcionista recep = new Recepcionista(quartos);
 		Hospede hosp = new Hospede();
 		recep.aloca(hosp);
 	
@@ -73,6 +72,32 @@ class TestSistema {
 		
 		hosp.saidaPasseio();
 		assertEquals(recep.getQuartos().get(0).getPosseChave(), EnumPosseChave.HOTEL, 
+				"Hóspede saiu, mas a chave está no quarto");
+	}
+	
+	@Test
+	void camareiraLimpaQuarto() {
+		ArrayList<Quarto> quartos = new ArrayList<Quarto>();
+		ArrayList<Camareira> camareiras = new ArrayList<>();
+		
+		// Alimentando arrays
+		for (int i = 0; i < 10; i++) quartos.add(new Quarto());
+		for (int i = 0; i < 10; i++) camareiras.add(new Camareira());
+		
+		Recepcionista recep = new Recepcionista(quartos, camareiras);
+		Hospede hosp = new Hospede();
+		
+		recep.aloca(hosp);
+
+		hosp.saidaPasseio();
+		
+		try {
+			Thread.sleep(5001);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertEquals(EnumPosseChave.HOSPEDE, recep.getQuartos().get(0).getPosseChave(),
 				"Hóspede saiu, mas a chave está no quarto");
 	}
 }

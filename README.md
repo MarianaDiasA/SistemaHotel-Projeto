@@ -13,8 +13,6 @@ Foi utilizada a metodologia TDD para o desenvolvimento do projeto.
 ## Autores
 
 - [Mariana Dias](https://github.com/MarianaDiasA)
-- [Rafael](https://github.com/Rasads7)
-
 
 ## Rodando os testes
 

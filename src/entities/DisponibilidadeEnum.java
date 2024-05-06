@@ -4,5 +4,5 @@ package entities;
 //disponibilidade vai garantir que de fato tal estado do quarto existe
 
 public enum DisponibilidadeEnum {
-	VAGO, OCUPADO;
+	VAGO, OCUPADO, INDISPONIVEL;
 }

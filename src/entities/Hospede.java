@@ -41,8 +41,8 @@ public class Hospede extends Thread {
     	 * 
     	 * O Hóspede não poderá voltar para o quarto até que a chave esteja disponível
     	 */
+		System.out.println("Hóspede '" + this.getNome() + "' foi passear.");
 		this.getQuarto().setPosseChave(EnumPosseChave.HOTEL);
-        System.out.println("Hóspede '" + this.getNome() + "' foi passear.");
         
         try {
             Thread.sleep(3000);
@@ -50,32 +50,35 @@ public class Hospede extends Thread {
             e.printStackTrace();
         }
         
-        System.out.println("Voltou");
-        this.start();
-        
-        try {
-			this.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-        
-        System.out.println("Entrou");
+        System.out.println("Hóspede '" + this.getNome() + "' voltou do passeio");
     }
+	
+	public void irEmbora() {
+		this.getQuarto().limparHospedes();
+	}
 
     @Override
     public void run() {
-        while (true) {
+    	this.saidaPasseio();
+    	
+    	boolean parar = false;
+        while (!parar) {
+        	//System.out.println("Posso da chave: " + quarto.getPosseChave().name());
         	if (terminouLimpar()) {
         		this.getQuarto().setPosseChave(EnumPosseChave.HOSPEDE);
         		this.getQuarto().setLimpo(false);
-        		break;
+        		parar = true;
         	}
         }
+        
+        System.out.println("Hóspede '" + this.getNome() + "' voltou para o quarto");
+        
+        this.irEmbora();
     }
     
     // Métodos auxiliares
     private boolean terminouLimpar() {
-    	return (quarto.getPosseChave().equals(EnumPosseChave.HOTEL));
+    	return (quarto.getPosseChave().equals(EnumPosseChave.HOTEL) && quarto.isLimpo());
     }
 }
 

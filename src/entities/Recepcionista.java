@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Recepcionista {
 
 	private ArrayList<Quarto> quartos;
-	private Observer observador;
+	private ArrayList<Camareira> camarareiras;
 	
 	// Constructors
 	public Recepcionista() {
@@ -18,8 +18,10 @@ public class Recepcionista {
 	
 	public Recepcionista(ArrayList<Quarto> quartos, ArrayList<Camareira> camareiras) {
 		this.quartos = quartos;
-		this.observador = new Observer(quartos, camareiras);
-		this.observador.start();
+		this.camarareiras = camareiras;
+		for (Camareira camareira : camareiras) {
+			camareira.start();
+		}
 	}
 	
 	// Getters e Setters
